@@ -1,6 +1,5 @@
 import cheerio from 'cheerio'
 import fetchCookie from 'fetch-cookie'
-import FormData from 'form-data'
 import moment from 'moment'
 import nodeFetch from 'node-fetch'
 import * as qs from 'querystring'
