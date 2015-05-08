@@ -70,10 +70,7 @@ export default async function main (argv) {
   const opts = docopt(doc, { argv })
   const gas = gasPrice.gas[opts['<gas>']] || opts['<gas>']
 
-  const prices = [].concat(...(await Promise.all(
-    opts['<postcode>'].map(postcode => gasPrice.gasPrice(gas, postcode))
-  )))
-
+  const prices = await gasPrice.gasPrice(gas, ...opts['<postcode>'])
   const style = opts['--pretty'] ? pretty : raw
   const table = new Table(style.table)
 

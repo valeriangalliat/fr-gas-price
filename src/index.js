@@ -48,7 +48,7 @@ const getPrices = table =>
       }
     })
 
-export async function gasPrice(gas, postcode) {
+async function gasPriceInner(gas, postcode) {
   // Create a new `fetchCookie` each time so we can parallel requests.
   // Won't work if this line is global to the module.
   const fetch = fetchCheerio(fetchCookie(nodeFetch))
@@ -64,3 +64,8 @@ export async function gasPrice(gas, postcode) {
 
   return getPrices(result)
 }
+
+export const gasPrice = async (gas, ...postcodes) =>
+  [].concat(...(await Promise.all(
+    postcodes.map(postcode => gasPriceInner(gas, postcode))
+  )))

@@ -53,6 +53,6 @@ import { gas, gasPrice } from 'fr-gas-price'
 const display = ({ city, name, brand, price, updated }) =>
   doStuffWith(city, name, brand, price, updated)
 
-gasPrice(gas.unleaded95, 38100)
+gasPrice(gas.unleaded95, ...[38100, 38200])
   .then(prices => prices.forEach(display))
 ```
