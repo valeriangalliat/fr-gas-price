@@ -1,14 +1,13 @@
-const cheerio = require('cheerio')
-const fetchCookie = require('fetch-cookie')
-const FormData = require('form-data')
-const moment = require('moment')
-const qs = require('querystring')
-const Table = require('cli-table')
-const tough = require('tough-cookie')
+import cheerio from 'cheerio'
+import fetchCookie from 'fetch-cookie'
+import FormData from 'form-data'
+import moment from 'moment'
+import nodeFetch from 'node-fetch'
+import * as qs from 'querystring'
 
 const endpoint = 'http://www.prix-carburants.gouv.fr/'
 
-const fuel = {
+export const gas = {
   diesel: 1,
   unleaded95: 2,
   e85: 3,
@@ -17,12 +16,10 @@ const fuel = {
   unleaded98: 6,
 }
 
-const postcode = process.argv[2]
-
 const fetchCheerio = fetch => async (...args) =>
   cheerio.load(await (await fetch(...args)).text())
 
-const fetch = fetchCheerio(fetchCookie(require('node-fetch')))
+const fetch = fetchCheerio(fetchCookie(nodeFetch))
 
 const getToken = $ =>
   $('#recherche_recherchertype__token').val()
@@ -52,9 +49,9 @@ const getPrices = table =>
       }
     })
 
-async () => {
+export async function gasPrice(gas, postcode) {
   const token = getToken(await fetch(endpoint))
-  const form = getForm(fuel.unleaded95, postcode, token)
+  const form = getForm(gas, postcode, token)
 
   const result = getTable(await fetch(endpoint, {
     method: 'post',
@@ -62,17 +59,5 @@ async () => {
     body: form,
   }))
 
-  const prices = getPrices(result)
-
-  const table = new Table({
-    head: ['City', 'Name', 'Brand', 'Price', 'Updated'],
-  })
-
-  prices.forEach(item => {
-    table.push([item.city, item.name, item.brand, item.price, moment(item.date).format('YYYY-MM-DD')])
-  })
-
-  console.log(table.toString())
-
-}()
-  .then(null, require('promise-done'))
+  return getPrices(result)
+}
