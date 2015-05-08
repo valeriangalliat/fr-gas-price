@@ -7,6 +7,7 @@ import * as qs from 'querystring'
 
 const endpoint = 'http://www.prix-carburants.gouv.fr/'
 
+// The different gas identifiers.
 export const gas = {
   diesel: 1,
   unleaded95: 2,
