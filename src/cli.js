@@ -3,8 +3,8 @@ import done from 'promise-done'
 import moment from 'moment'
 import Table from 'cli-table'
 
-export async function main () {
-  const prices = await gasPrice(gas.unleaded95, process.argv[2])
+export async function main (argv) {
+  const prices = await gasPrice(gas.unleaded95, argv[0])
 
   const table = new Table({
     head: ['City', 'Name', 'Brand', 'Price', 'Updated'],
@@ -18,5 +18,5 @@ export async function main () {
 }
 
 if (require.main === module) {
-  main().then(null, done)
+  main(process.argv.slice(2)).then(null, done)
 }
