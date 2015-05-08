@@ -20,8 +20,6 @@ export const gas = {
 const fetchCheerio = fetch => async (...args) =>
   cheerio.load(await (await fetch(...args)).text())
 
-const fetch = fetchCheerio(fetchCookie(nodeFetch))
-
 const getToken = $ =>
   $('#recherche_recherchertype__token').val()
 
@@ -51,6 +49,10 @@ const getPrices = table =>
     })
 
 export async function gasPrice(gas, postcode) {
+  // Create a new `fetchCookie` each time so we can parallel requests.
+  // Won't work if this line is global to the module.
+  const fetch = fetchCheerio(fetchCookie(nodeFetch))
+
   const token = getToken(await fetch(endpoint))
   const form = getForm(gas, postcode, token)
 
