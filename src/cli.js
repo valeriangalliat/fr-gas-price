@@ -7,9 +7,21 @@ import Table from 'cli-table'
 const doc = `
 Usage: fr-gas-price [options] <gas> <postcode>...
 
+Arguments:
+  <gas>       The gas type (name or ID, see below).
+  <postcode>  One or more postcodes to fetch prices for.
+
 Options:
   -p, --pretty  Show a pretty table instead of raw output.
-`
+
+Gas:
+  diesel         1
+  unleaded95     2
+  e85            3
+  gplc           4
+  unleaded95e10  5
+  unleaded98     6
+`.trim()
 
 const underscorify = x =>
   x.replace(/ /g, '_')
