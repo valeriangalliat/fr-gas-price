@@ -7,7 +7,16 @@ const Table = require('cli-table')
 const tough = require('tough-cookie')
 
 const endpoint = 'http://www.prix-carburants.gouv.fr/'
-const unleaded95 = 2
+
+const fuel = {
+  diesel: 1,
+  unleaded95: 2,
+  e85: 3,
+  gplc: 4,
+  unleaded95e10: 5,
+  unleaded98: 6,
+}
+
 const postcode = process.argv[2]
 
 const fetchCheerio = fetch => async (...args) =>
@@ -45,7 +54,7 @@ const getPrices = table =>
 
 async () => {
   const token = getToken(await fetch(endpoint))
-  const form = getForm(unleaded95, postcode, token)
+  const form = getForm(fuel.unleaded95, postcode, token)
 
   const result = getTable(await fetch(endpoint, {
     method: 'post',
