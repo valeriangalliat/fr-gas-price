@@ -56,3 +56,9 @@ const display = ({ city, name, brand, price, updated }) =>
 gasPrice(gas.unleaded95, ...[38100, 38200])
   .then(prices => prices.forEach(display))
 ```
+
+Bugs
+----
+
+* The pagination is not supported. Only the first page per postcode is
+  shown.
