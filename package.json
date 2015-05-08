@@ -1,4 +1,30 @@
 {
+  "name": "fr-gas-price",
+  "version": "1.0.0",
+  "description": "Retrieve French gas price data from government website.",
+  "homepage": "https://github.com/valeriangalliat/fr-gas-price",
+  "license": {
+    "type": "Unlicense",
+    "url": "http://unlicense.org/"
+  },
+  "author": {
+    "name": "Valérian Galliat",
+    "url": "http://val.codejam.info/"
+  },
+  "files": [
+    "bin/fr-gas-price",
+    "README.md",
+    "UNLICENSE",
+    "cli.js",
+    "index.js"
+  ],
+  "bin": [
+    "bin/fr-gas-price"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/valeriangalliat/fr-gas-price.git"
+  },
   "dependencies": {
     "babel": "^5.2.9",
     "babel-runtime": "^5.2.17",
@@ -10,8 +36,13 @@
     "node-fetch": "^1.2.1",
     "promise-done": "^1.0.0"
   },
+  "devDependencies": {
+    "babel": "^5.2.9",
+    "help2md": "^1.0.5"
+  },
   "scripts": {
-    "prepublish": "babel src -d .",
-    "start": "node cli.js"
+    "build": "babel src -d .",
+    "prepublish": "$npm_package_scripts_build",
+    "readme": "bin/fr-gas-price --help | help2md-in-place README.md"
   }
 }
