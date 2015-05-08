@@ -1,17 +1,72 @@
-import { gas, gasPrice } from './'
+import { docopt } from 'docopt'
+import * as gasPrice from './'
 import done from 'promise-done'
 import moment from 'moment'
 import Table from 'cli-table'
 
-export async function main (argv) {
-  const prices = await gasPrice(gas.unleaded95, argv[0])
+const doc = `
+Usage: fr-gas-price [options] <gas> <postcode>...
 
-  const table = new Table({
+Options:
+  -p, --pretty  Show a pretty table instead of raw output.
+`
+
+const underscorify = x =>
+  x.replace(/ /g, '_')
+
+const raw = {
+  table: {
+    chars: {
+      'top': '',
+      'top-mid': '',
+      'top-left': '',
+      'top-right': '',
+      'bottom': '',
+      'bottom-mid': '',
+      'bottom-left': '',
+      'bottom-right': '',
+      'left': '',
+      'left-mid': '',
+      'mid': '',
+      'mid-mid': '',
+      'right': '',
+      'right-mid': '',
+      'middle': ' ',
+    },
+    style: {
+      'padding-left': 0,
+      'padding-right': 0,
+    },
+  },
+
+  format: item =>
+    [item.city, item.name, item.brand, item.price, moment(item.date).format('YYYY-MM-DD')]
+      .map(String)
+      .map(underscorify),
+}
+
+const pretty = {
+  table: {
     head: ['City', 'Name', 'Brand', 'Price', 'Updated'],
-  })
+  },
+
+  format: item =>
+    [item.city, item.name, item.brand, item.price, moment(item.date).format('YYYY-MM-DD')],
+}
+
+export default async function main (argv) {
+  const opts = docopt(doc, { argv })
+  const gas = gasPrice.gas[opts['<gas>']] || opts['<gas>']
+
+  const prices = [].concat(...(await Promise.all(
+    opts['<postcode>'].map(postcode => gasPrice.gasPrice(gas, postcode))
+  )))
+
+  const style = opts['--pretty'] ? pretty : raw
+  const table = new Table(style.table)
 
   prices.forEach(item => {
-    table.push([item.city, item.name, item.brand, item.price, moment(item.date).format('YYYY-MM-DD')])
+    table.push(style.format(item))
   })
 
   console.log(table.toString())
