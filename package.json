@@ -1,6 +1,6 @@
 {
   "name": "fr-gas-price",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Retrieve French gas price data from government website.",
   "homepage": "https://github.com/valeriangalliat/fr-gas-price",
   "license": {
