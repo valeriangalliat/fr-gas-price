@@ -3,10 +3,7 @@
   "version": "1.0.2",
   "description": "Retrieve French gas price data from government website.",
   "homepage": "https://github.com/valeriangalliat/fr-gas-price",
-  "license": {
-    "type": "Unlicense",
-    "url": "http://unlicense.org/"
-  },
+  "license": "Unlicense",
   "author": {
     "name": "Valérian Galliat",
     "url": "http://val.codejam.info/"
