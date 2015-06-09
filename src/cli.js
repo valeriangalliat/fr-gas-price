@@ -43,27 +43,27 @@ const raw = {
       'mid-mid': '',
       'right': '',
       'right-mid': '',
-      'middle': ' ',
+      'middle': ' '
     },
     style: {
       'padding-left': 0,
-      'padding-right': 0,
-    },
+      'padding-right': 0
+    }
   },
 
   format: item =>
     [item.city, item.name, item.brand, item.price, moment(item.date).format('YYYY-MM-DD')]
       .map(String)
-      .map(underscorify),
+      .map(underscorify)
 }
 
 const pretty = {
   table: {
-    head: ['City', 'Name', 'Brand', 'Price', 'Updated'],
+    head: ['City', 'Name', 'Brand', 'Price', 'Updated']
   },
 
   format: item =>
-    [item.city, item.name, item.brand, item.price, moment(item.date).format('YYYY-MM-DD')],
+    [item.city, item.name, item.brand, item.price, moment(item.date).format('YYYY-MM-DD')]
 }
 
 export default async function main (argv) {

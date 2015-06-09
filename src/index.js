@@ -13,7 +13,7 @@ export const gas = {
   e85: 3,
   gplc: 4,
   unleaded95e10: 5,
-  unleaded98: 6,
+  unleaded98: 6
 }
 
 const fetchCheerio = fetch => async (...args) =>
@@ -26,7 +26,7 @@ const getForm = (gas, postcode, token) =>
   qs.stringify({
     '_recherche_recherchertype[choix_carbu]': gas,
     '_recherche_recherchertype[localisation]': postcode,
-    '_recherche_recherchertype[_token]': token,
+    '_recherche_recherchertype[_token]': token
   })
 
 const getTable = $ =>
@@ -43,11 +43,11 @@ const getPrices = table =>
         name: tds[3],
         brand: tds[4],
         price: parseFloat(tds[5]),
-        updated: moment(tds[6], 'DD/MM/YY'),
+        updated: moment(tds[6], 'DD/MM/YY')
       }
     })
 
-async function gasPriceInner(gas, postcode) {
+async function gasPriceInner (gas, postcode) {
   // Create a new `fetchCookie` each time so we can parallel requests.
   // Won't work if this line is global to the module.
   const fetch = fetchCheerio(fetchCookie(nodeFetch))
@@ -58,7 +58,7 @@ async function gasPriceInner(gas, postcode) {
   const result = getTable(await fetch(endpoint, {
     method: 'post',
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    body: form,
+    body: form
   }))
 
   return getPrices(result)
